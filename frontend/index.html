@@ -1,0 +1,1130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IRIS AI - Machine Learning Iris Flower Classification Dashboard">
+    <title>IRIS AI | Flower Classification Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">✿</div>
+            <div>
+                <h2>IRIS<span> AI</span></h2>
+                <small>Classification System</small>
+            </div>
+        </div>
+
+        <div class="sidebar-label">MAIN MENU</div>
+
+        <nav class="navigation">
+
+            <a href="#overview" class="nav-link active" data-section="overview">
+                <span>▦</span> Overview
+            </a>
+
+            <a href="#prediction" class="nav-link" data-section="prediction">
+                <span>✿</span> Flower Prediction
+            </a>
+
+            <a href="#evaluation" class="nav-link" data-section="evaluation">
+                <span>▥</span> Model Evaluation
+            </a>
+
+            <a href="#comparison" class="nav-link" data-section="comparison">
+                <span>⇄</span> Model Comparison
+            </a>
+
+            <a href="#history" class="nav-link" data-section="history">
+                <span>◷</span> Prediction History
+            </a>
+
+            <a href="#about" class="nav-link" data-section="about">
+                <span>ⓘ</span> About Project
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-status">
+                <span class="status-dot"></span>
+                <div>
+                    <strong>System Status</strong>
+                    <small id="apiStatus">Checking API...</small>
+                </div>
+            </div>
+
+            <p>IRIS AI Classification System</p>
+            <small>Machine Learning Project</small>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP NAVIGATION -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    ☰
+                </button>
+
+                <div>
+                    <h1 id="pageTitle">Dashboard Overview</h1>
+                    <p>Welcome to the Iris Flower Classification System.</p>
+                </div>
+
+            </div>
+
+            <div class="topbar-right">
+                <span class="topbar-tag">MACHINE LEARNING</span>
+                <div class="user-avatar">IA</div>
+            </div>
+
+        </header>
+
+
+        <div class="page-container">
+
+            <!-- =========================================
+                 OVERVIEW SECTION
+            ========================================== -->
+            <section class="page-section active-section" id="overview">
+
+                <div class="welcome-banner">
+
+                    <div>
+                        <span class="eyebrow">MACHINE LEARNING DASHBOARD</span>
+
+                        <h2>Explore. Analyse. Predict.</h2>
+
+                        <p>
+                            An intelligent classification system that predicts
+                            Iris flower species using machine learning.
+                        </p>
+
+                        <button class="btn btn-light" data-go="prediction">
+                            Start Prediction <span>→</span>
+                        </button>
+                    </div>
+
+                    <div class="flower-art">✿</div>
+
+                </div>
+
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Dataset Overview</h2>
+                        <p>
+                            A summary of the Iris dataset used to train
+                            and evaluate the models.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-icon blue-icon">▤</div>
+                        <div>
+                            <span>Total Observations</span>
+                            <h3 id="totalObservations">150</h3>
+                            <small>Dataset records</small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange-icon">⌗</div>
+                        <div>
+                            <span>Input Features</span>
+                            <h3 id="totalFeatures">4</h3>
+                            <small>Flower measurements</small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon lime-icon">✿</div>
+                        <div>
+                            <span>Flower Species</span>
+                            <h3 id="totalSpecies">3</h3>
+                            <small>Classification classes</small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon purple-icon">◎</div>
+                        <div>
+                            <span>Selected Model</span>
+                            <h3 class="model-name" id="selectedModel">
+                                Logistic Regression
+                            </h3>
+                            <small>Final classification model</small>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="content-grid">
+
+                    <div class="panel">
+
+                        <div class="panel-heading">
+                            <div>
+                                <h3>Selected Model Performance</h3>
+                                <p>Evaluation on the held-out test dataset</p>
+                            </div>
+
+                            <span class="panel-badge">TEST RESULTS</span>
+                        </div>
+
+                        <div class="performance-grid">
+
+                            <div class="performance-item">
+                                <span>Accuracy</span>
+                                <strong id="overviewAccuracy">--</strong>
+                            </div>
+
+                            <div class="performance-item">
+                                <span>ROC-AUC</span>
+                                <strong id="overviewRoc">--</strong>
+                            </div>
+
+                        </div>
+
+                        <div class="chart-container">
+                            <canvas id="overviewChart"></canvas>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel species-panel">
+
+                        <div class="panel-heading">
+                            <div>
+                                <h3>Available Species</h3>
+                                <p>Classification categories</p>
+                            </div>
+                        </div>
+
+                        <div class="species-item">
+                            <div class="species-flower setosa-flower">✿</div>
+                            <div>
+                                <strong>Iris Setosa</strong>
+                                <small>Species 01</small>
+                            </div>
+                        </div>
+
+                        <div class="species-item">
+                            <div class="species-flower versicolor-flower">✿</div>
+                            <div>
+                                <strong>Iris Versicolor</strong>
+                                <small>Species 02</small>
+                            </div>
+                        </div>
+
+                        <div class="species-item">
+                            <div class="species-flower virginica-flower">✿</div>
+                            <div>
+                                <strong>Iris Virginica</strong>
+                                <small>Species 03</small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================================
+                 FLOWER PREDICTION SECTION
+            ========================================== -->
+            <section class="page-section" id="prediction">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Flower Species Prediction</h2>
+                        <p>
+                            Enter the four flower measurements to predict
+                            its species.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="prediction-layout">
+
+                    <!-- INPUT PANEL -->
+                    <div class="panel prediction-panel">
+
+                        <div class="panel-heading">
+                            <div>
+                                <h3>Flower Measurements</h3>
+                                <p>All measurements should be in centimetres (cm).</p>
+                            </div>
+
+                            <span class="panel-badge">INPUT DATA</span>
+                        </div>
+
+
+                        <form id="predictionForm">
+
+                            <div class="form-grid">
+
+                                <div class="form-group">
+                                    <label for="sepalLength">
+                                        Sepal Length (cm)
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="sepalLength"
+                                        min="0.1"
+                                        max="20"
+                                        step="0.1"
+                                        placeholder="e.g. 5.1"
+                                        required
+                                    >
+
+                                    <small>Length of the sepal</small>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="sepalWidth">
+                                        Sepal Width (cm)
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="sepalWidth"
+                                        min="0.1"
+                                        max="20"
+                                        step="0.1"
+                                        placeholder="e.g. 3.5"
+                                        required
+                                    >
+
+                                    <small>Width of the sepal</small>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="petalLength">
+                                        Petal Length (cm)
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="petalLength"
+                                        min="0.1"
+                                        max="20"
+                                        step="0.1"
+                                        placeholder="e.g. 1.4"
+                                        required
+                                    >
+
+                                    <small>Length of the petal</small>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="petalWidth">
+                                        Petal Width (cm)
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="petalWidth"
+                                        min="0.1"
+                                        max="20"
+                                        step="0.1"
+                                        placeholder="e.g. 0.2"
+                                        required
+                                    >
+
+                                    <small>Width of the petal</small>
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-actions">
+
+                                <button
+                                    type="reset"
+                                    class="btn btn-outline"
+                                    id="resetPrediction"
+                                >
+                                    Clear Fields
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                    id="predictButton"
+                                >
+                                    Predict Species <span>→</span>
+                                </button>
+
+                            </div>
+
+
+                            <div
+                                id="predictionError"
+                                class="error-message hidden"
+                            ></div>
+
+                        </form>
+
+                    </div>
+
+
+
+                    <!-- RESULT PANEL -->
+                    <div class="panel result-panel">
+
+                        <div class="panel-heading">
+                            <div>
+                                <h3>Prediction Result</h3>
+                                <p>The model's classification output</p>
+                            </div>
+
+                            <span class="panel-badge">AI RESULT</span>
+                        </div>
+
+
+                        <!-- EMPTY STATE -->
+                        <div id="emptyResult" class="empty-result">
+
+                            <div class="empty-flower">✿</div>
+
+                            <h3>Awaiting Prediction</h3>
+
+                            <p>
+                                Enter the flower measurements and click
+                                Predict Species to see the result.
+                            </p>
+
+                        </div>
+
+
+
+                        <!-- PREDICTION RESULT
+                             Hidden until a prediction is returned.
+                        -->
+                        <div id="predictionResult" class="prediction-result hidden">
+
+                            <div class="result-flower" id="resultFlower">
+                                ✿
+                            </div>
+
+                            <span class="result-label">
+                                PREDICTED SPECIES
+                            </span>
+
+                            <h2 id="predictedSpecies">Iris Setosa</h2>
+
+                            <p id="predictionMessage"></p>
+
+
+                            <!-- INDIVIDUAL PREDICTION CONFIDENCE -->
+                            <div class="confidence-section">
+
+                                <div class="confidence-heading">
+                                    <span>Prediction Confidence</span>
+                                    <strong id="confidenceValue">0%</strong>
+                                </div>
+
+                                <div class="progress-track">
+                                    <div
+                                        class="progress-fill"
+                                        id="confidenceBar"
+                                    ></div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="result-note">
+                                <span>✓</span>
+                                Prediction generated successfully by the trained model.
+                            </div>
+
+
+
+                            <!-- MODEL EVALUATION METRICS -->
+                            <div class="prediction-performance">
+
+                                <div class="section-heading">
+                                    <div>
+
+                                        <span class="eyebrow">
+                                            MODEL PERFORMANCE
+                                        </span>
+
+                                        <h3>
+                                            How well does the model perform?
+                                        </h3>
+
+                                        <p>
+                                            These metrics show the overall
+                                            performance of the selected
+                                            machine learning model on the
+                                            test dataset. They are not
+                                            calculated from this individual
+                                            prediction.
+                                        </p>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="prediction-metrics-grid">
+
+                                    <div class="prediction-metric-card">
+                                        <span>Accuracy</span>
+                                        <strong id="predictionAccuracy">--</strong>
+                                        <small>Overall correctness</small>
+                                    </div>
+
+
+                                    <div class="prediction-metric-card">
+                                        <span>Precision</span>
+                                        <strong id="predictionPrecision">--</strong>
+                                        <small>Prediction reliability</small>
+                                    </div>
+
+
+                                    <div class="prediction-metric-card">
+                                        <span>Recall</span>
+                                        <strong id="predictionRecall">--</strong>
+                                        <small>Correct species identification</small>
+                                    </div>
+
+
+                                    <div class="prediction-metric-card">
+                                        <span>F1-Score</span>
+                                        <strong id="predictionF1">--</strong>
+                                        <small>Precision and recall balance</small>
+                                    </div>
+
+
+                                    <div class="prediction-metric-card">
+                                        <span>ROC-AUC</span>
+                                        <strong id="predictionRocAuc">--</strong>
+                                        <small>Species classification ability</small>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================================
+                 MODEL EVALUATION SECTION
+            ========================================== -->
+            <section class="page-section" id="evaluation">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Model Evaluation</h2>
+                        <p>
+                            Performance of the selected model on unseen test data.
+                        </p>
+                    </div>
+
+                    <button class="btn btn-primary" id="downloadReport">
+                        ↓ Download Evaluation Report
+                    </button>
+
+                </div>
+
+
+                <!-- EVALUATION METRICS -->
+                <div class="stats-grid evaluation-stats">
+
+                    <div class="stat-card">
+                        <div class="stat-icon blue-icon">◎</div>
+                        <div>
+                            <span>Accuracy</span>
+                            <h3 id="metricAccuracy">--</h3>
+                            <small>Correct predictions</small>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange-icon">◉</div>
+                        <div>
+                            <span>Precision</span>
+                            <h3 id="metricPrecision">--</h3>
+                            <small>Macro average</small>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-card">
+                        <div class="stat-icon lime-icon">↗</div>
+                        <div>
+                            <span>Recall</span>
+                            <h3 id="metricRecall">--</h3>
+                            <small>Macro average</small>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-card">
+                        <div class="stat-icon purple-icon">✦</div>
+                        <div>
+                            <span>F1-Score</span>
+                            <h3 id="metricF1">--</h3>
+                            <small>Macro average</small>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <!-- CONFUSION MATRIX AND CLASSIFICATION CHART -->
+                <div class="content-grid">
+
+                    <div class="panel">
+
+                        <div class="panel-heading">
+                            <div>
+                                <h3>Confusion Matrix</h3>
+                                <p>Actual versus predicted flower species</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="confusion-wrapper"
+                            id="confusionMatrix"
+                        >
+                            <p>Loading confusion matrix...</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-heading">
+                            <div>
+                                <h3>Classification Performance</h3>
+                                <p>
+                                    Precision, recall and F1-score by species
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <canvas id="classificationChart"></canvas>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CLASSIFICATION REPORT TABLE -->
+                <div class="panel table-panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Classification Report</h3>
+                            <p>
+                                Detailed performance for each flower species
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Species</th>
+                                    <th>Precision</th>
+                                    <th>Recall</th>
+                                    <th>F1-Score</th>
+                                    <th>Support</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="classificationTable">
+                                <tr>
+                                    <td colspan="5">
+                                        Loading evaluation results...
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================================
+                 MODEL COMPARISON SECTION
+            ========================================== -->
+            <section class="page-section" id="comparison">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Model Comparison</h2>
+                        <p>
+                            Compare the four machine learning algorithms
+                            using five-fold cross-validation.
+                        </p>
+                    </div>
+                </div>
+
+
+
+                <!-- CROSS VALIDATION CHART -->
+                <div class="panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Cross-Validation Accuracy</h3>
+                            <p>
+                                Mean accuracy across five validation folds
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="chart-container large-chart">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+
+                </div>
+
+
+
+                <!-- MODEL COMPARISON TABLE -->
+                <div class="panel table-panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Performance Comparison Table</h3>
+                            <p>
+                                Cross-validation metrics for all trained models
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Machine Learning Model</th>
+                                    <th>Accuracy</th>
+                                    <th>Precision</th>
+                                    <th>Recall</th>
+                                    <th>F1-Score</th>
+                                    <th>ROC-AUC</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="comparisonTable">
+                                <tr>
+                                    <td colspan="6">
+                                        Loading model results...
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SELECTED MODEL -->
+                <div class="selected-model-banner">
+
+                    <div class="selected-model-icon">✓</div>
+
+                    <div>
+                        <strong>
+                            Selected Final Model: Logistic Regression
+                        </strong>
+
+                        <p>
+                            Selected based on its strong cross-validation
+                            performance and balance of evaluation metrics.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================================
+                 PREDICTION HISTORY SECTION
+            ========================================== -->
+            <section class="page-section" id="history">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Prediction History</h2>
+                        <p>
+                            Review predictions previously made in this browser.
+                        </p>
+                    </div>
+
+                    <button
+                        class="btn btn-outline danger-btn"
+                        id="clearHistory"
+                    >
+                        Clear History
+                    </button>
+
+                </div>
+
+
+
+                <!-- HISTORY STATISTICS -->
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-icon blue-icon">◷</div>
+                        <div>
+                            <span>Total Predictions</span>
+                            <h3 id="historyTotal">0</h3>
+                            <small>Recorded predictions</small>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-card">
+                        <div class="stat-icon lime-icon">✿</div>
+                        <div>
+                            <span>Most Predicted Species</span>
+                            <h3 class="model-name" id="mostPredicted">
+                                None
+                            </h3>
+                            <small>Based on saved history</small>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <!-- HISTORY TABLE -->
+                <div class="panel table-panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Recent Predictions</h3>
+                            <p>Your locally stored prediction records</p>
+                        </div>
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Date &amp; Time</th>
+                                    <th>Measurements</th>
+                                    <th>Predicted Species</th>
+                                    <th>Confidence</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="historyTable">
+                                <tr>
+                                    <td colspan="4">
+                                        No prediction history available yet.
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <p class="history-note">
+                    Prediction history is stored locally in your browser
+                    using local storage. It is not shared with the backend
+                    or other users.
+                </p>
+
+            </section>
+
+
+
+            <!-- =========================================
+                 ABOUT PROJECT SECTION
+            ========================================== -->
+            <section class="page-section" id="about">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>About the Project</h2>
+                        <p>
+                            Understanding the dataset, methodology and
+                            technologies behind IRIS AI.
+                        </p>
+                    </div>
+                </div>
+
+
+
+                <!-- PROJECT INTRODUCTION -->
+                <div class="panel about-intro">
+
+                    <span class="eyebrow">PROJECT OVERVIEW</span>
+
+                    <h2>
+                        Iris Flower Classification Using Machine Learning
+                    </h2>
+
+                    <p>
+                        This project applies supervised machine learning
+                        algorithms to classify Iris flowers into three
+                        species based on four physical measurements.
+                        It uses the built-in Iris dataset provided by
+                        Scikit-learn.
+                    </p>
+
+                </div>
+
+
+
+                <!-- DATASET INFORMATION -->
+                <div class="content-grid">
+
+                    <div class="panel">
+
+                        <div class="panel-heading">
+                            <h3>Dataset Features</h3>
+                        </div>
+
+                        <div class="feature-list">
+
+                            <div>
+                                <span>01</span>
+                                Sepal Length (cm)
+                            </div>
+
+                            <div>
+                                <span>02</span>
+                                Sepal Width (cm)
+                            </div>
+
+                            <div>
+                                <span>03</span>
+                                Petal Length (cm)
+                            </div>
+
+                            <div>
+                                <span>04</span>
+                                Petal Width (cm)
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="panel">
+
+                        <div class="panel-heading">
+                            <h3>Classification Species</h3>
+                        </div>
+
+                        <div class="feature-list">
+
+                            <div>
+                                <span>01</span>
+                                Iris Setosa
+                            </div>
+
+                            <div>
+                                <span>02</span>
+                                Iris Versicolor
+                            </div>
+
+                            <div>
+                                <span>03</span>
+                                Iris Virginica
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MACHINE LEARNING METHODOLOGY -->
+                <div class="panel">
+
+                    <div class="panel-heading">
+                        <h3>Machine Learning Methodology</h3>
+                    </div>
+
+
+                    <div class="methodology-grid">
+
+                        <div class="method-step">
+                            <span>01</span>
+                            <h4>Data Exploration</h4>
+                            <p>
+                                Inspect the Iris dataset and understand
+                                its features and target classes.
+                            </p>
+                        </div>
+
+
+                        <div class="method-step">
+                            <span>02</span>
+                            <h4>Data Preparation</h4>
+                            <p>
+                                Prepare features and target labels, then
+                                split the dataset into training and
+                                testing sets.
+                            </p>
+                        </div>
+
+
+                        <div class="method-step">
+                            <span>03</span>
+                            <h4>Model Training</h4>
+                            <p>
+                                Train four supervised classification
+                                algorithms using the training data.
+                            </p>
+                        </div>
+
+
+                        <div class="method-step">
+                            <span>04</span>
+                            <h4>Model Evaluation</h4>
+                            <p>
+                                Evaluate performance using accuracy,
+                                precision, recall, F1-score and ROC-AUC.
+                            </p>
+                        </div>
+
+
+                        <div class="method-step">
+                            <span>05</span>
+                            <h4>Model Deployment</h4>
+                            <p>
+                                Integrate the selected trained model
+                                into a web-based prediction application.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- TECHNOLOGIES -->
+                <div class="panel">
+
+                    <div class="panel-heading">
+                        <h3>Technologies Used</h3>
+                    </div>
+
+                    <div class="technology-list">
+                        <span>Python</span>
+                        <span>Scikit-learn</span>
+                        <span>FastAPI</span>
+                        <span>NumPy</span>
+                        <span>Pandas</span>
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+                        <span>Chart.js</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================================
+                 FOOTER
+            ========================================== -->
+            <footer class="footer">
+                <p>© 2026 IRIS AI Classification System</p>
+                <p>Powered by Python, Scikit-learn and FastAPI</p>
+            </footer>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
