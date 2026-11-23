@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 import joblib
 import numpy as np
 import json
+from fastapi.responses import FileResponse
 
 # Create FastAPI application
 app = FastAPI(
@@ -40,9 +41,8 @@ class IrisInput(BaseModel):
 # Home endpoint
 @app.get("/")
 def home():
-    return {
-        "message": "Iris Flower Classification API is running successfully!"
-    }
+    return FileResponse(BASE_DIR.parent / "frontend" / "index.html")
+    
 @app.get("/metrics")
 def get_metrics():
     return evaluation_results
